@@ -38,6 +38,7 @@ const main = async () => {
 
   card = await getOriginalInformation(id);
   domainInfo = await getDomainInformation(card);
+  console.log(card);
   console.log(domainInfo);
 }
 

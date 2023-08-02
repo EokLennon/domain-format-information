@@ -53,8 +53,9 @@ const cleanMentionedTokens = (str: string) => {
 const cleanMentionedBattleStats = (str: string) => {
   const regex = /[0-9]{1,4} ATK\/[0-9]{1,4} DEF|ATK [0-9]{1,4}\/DEF [0-9]{1,4}|[0-9]{1,4} ATK and [0-9]{1,4} DEF/gi;
   const stats: string[] = [];
-  const cleanedStr = str.replace(regex, (match) => {
-    stats.push(match);
+  const cleanedStr = str.replace(regex, (match: string) => {
+    const m = match.replaceAll(' and ', '/');
+    stats.push(m);
     return '';
   });
   
