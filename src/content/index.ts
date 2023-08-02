@@ -33,8 +33,8 @@ const manageDOM = () => {
 const main = async () => {
   if (!headerEl || !cardTextEl || !cardImgEl) return;
   // @ts-expect-error
-  const imgName = cardImgEl.src.split('/').pop();
-  const id = imgName.split('.')[0];
+  const imgName: string = cardImgEl.src.split('/').pop();
+  const id: string = imgName.split('.')[0];
 
   card = await getOriginalInformation(id);
   domainInfo = await getDomainInformation(card);
