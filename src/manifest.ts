@@ -16,13 +16,15 @@ export default defineManifest({
   //   default_icon: 'img/icon-48.png',
   // },
   // options_page: 'options.html',
-  // background: {
-  //   service_worker: 'src/background/index.ts',
-  //   type: 'module',
-  // },
+  permissions: ['declarativeContent', 'downloads'],
+  action: {},
+  background: {
+    service_worker: 'src/background/index.ts',
+    type: 'module',
+  },
   content_scripts: [
     {
-      matches: ['https://ygoprodeck.com/card/*'],
+      matches: ['*://ygoprodeck.com/card/*'],
       js: ['src/content/index.ts'],
     },
   ],
@@ -32,5 +34,4 @@ export default defineManifest({
       matches: [],
     },
   ],
-  // permissions: [],
 })

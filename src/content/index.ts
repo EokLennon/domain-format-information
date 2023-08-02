@@ -1,9 +1,9 @@
 import { btnGroup, cardImgEl, cardTextEl, domainBtn, headerEl, normalBtn } from '../lib/dom';
 import { getOriginalInformation, getDomainInformation } from '../lib/card';
-import Card from '../models/card';
+import Card, { CardDomain } from '../models/card';
 
 var card: Card | undefined = undefined;
-var domainInfo: any = undefined;
+var domainInfo: CardDomain | undefined = undefined;
 
 const manageDOM = () => {
   if (!headerEl || !cardTextEl || !cardImgEl) return;
@@ -38,8 +38,7 @@ const main = async () => {
 
   card = await getOriginalInformation(id);
   domainInfo = await getDomainInformation(card);
-  console.log(card);
-  console.log(domainInfo);
+  chrome.runtime.sendMessage({ action: 'set-card-info', card, domainInfo })
 }
 
 main();
