@@ -1,4 +1,4 @@
-import Card from '../models/card';
+import Card, { CardDomain } from '../models/card';
 import { validArchetypes } from './constants';
 
 // #region Regex Replacers
@@ -87,7 +87,7 @@ const cleanMentionedAttributes = (str: string, attribute: string) => {
 }
 // #endregion
 
-export const getCardDomain = (card: Card) => {
+export const getCardDomain = (card: Card): Omit<CardDomain, 'name' | 'desc'> => {
   const effect = card.desc;
   const name = card.name;
   const type = card.race;
@@ -128,26 +128,29 @@ export const getOriginalInformation = async (id: string): Promise<Card | undefin
   }
 }
 
-export const getDomainAdditionalInformation = async (card: Card): Promise<any | undefined> => {
+// ToDo: Implement Google Sheets API to get Domain Text and Archetypes from DK sheet.
+export const getDomainAdditionalInformation = async (card: Card): Promise<{ archetypes: string[], desc: string } | undefined> => {
   try {
     // const petition = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?id=${id}`);
     // const response = await petition.json();
-    return { desc: 'ToDo: Add Domain effect text from endpoint/json/csv.' }
+    return { archetypes: [], desc: 'ToDo: Add Domain effect text from endpoint/json/csv.' }
   } catch (err) {
     console.log(err);
     return;
   }
 }
 
-export const getDomainInformation = async (card: Card | undefined) => {
+export const getDomainInformation = async (card: Card | undefined): Promise<CardDomain | undefined> => {
   if (!card) return;
   if (['spell', 'trap', 'token', 'skill'].indexOf(card.frameType) > -1) return;
   const _domain = getCardDomain(card);
   const addon = await getDomainAdditionalInformation(card);
-  const domain = {
+  const archetypes: string[] = [..._domain.archetypes, ...(addon?.archetypes || [])].filter((v, i, array) => !!v && array.indexOf(v) === i);
+  const domain: CardDomain = {
     ..._domain,
+    archetypes,
     name: card.name,
-    desc: addon.desc
+    desc: addon?.desc || ''
   }
   return domain;
 }

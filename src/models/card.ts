@@ -23,4 +23,14 @@ interface CardImage {
   image_url_small: string
 }
 
+export interface CardDomain {
+  archetypes: string[]
+  cards: string[]
+  stats: string[]
+  types: string[]
+  attributes: string[]
+  name: string
+  desc: string
+}
+
 export default Card;
