@@ -1,8 +1,11 @@
-# domain-format-information
+# Domain Format Information
+Displays the current card information for Domain Format in YGOProCard site.
+> A chrome/edge extension tools built with Vite + Vanilla-ts, and Manifest v3
 
-> a chrome extension tools built with Vite + Vanilla-ts, and Manifest v3
+## Installing (For Users)
+TBA
 
-## Installing
+## Installing (For Developers)
 
 1. Check if your `Node.js` version is >= **14**.
 2. Change or configurate the name of your extension on `src/manifest`.
@@ -25,9 +28,10 @@ $ npm run dev
 
 ### Nomal FrontEnd Developer Mode
 
-1. access `http://localhost:3000/`
-2. when debugging popup page, open `/popup.html`
-3. when debugging options page, open `/options.html`
+0. Go to `src/manifest.ts` to enable popup/options page.
+1. Access `http://localhost:3000/`
+2. When debugging popup page, open `/popup.html`
+3. When debugging options page, open `/options.html`
 
 ## Packing
 

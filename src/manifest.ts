@@ -1,8 +1,8 @@
 import { defineManifest } from '@crxjs/vite-plugin'
 
 export default defineManifest({
-  name: 'Domain Format information',
-  description: "Display the Card's information for Domain Format.",
+  name: 'Domain Format Extension',
+  description: "Displays the current card information for Domain Format in YGOProCard site.",
   version: '1.0.0',
   manifest_version: 3,
   icons: {

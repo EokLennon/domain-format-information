@@ -1,8 +1,8 @@
 {
-  "name": "domain-format-information",
-  "version": "0.0.0",
+  "name": "domain-format-extension",
+  "version": "1.0.0",
   "author": "**",
-  "description": "",
+  "description": "Displays the current card information for Domain Format in YGOProCard site.",
   "type": "module",
   "license": "MIT",
   "keywords": [
