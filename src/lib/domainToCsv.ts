@@ -92,7 +92,10 @@ const execute = async function (deck_master, spelltraps) {
 		res = await bulkdomain(urltraps,domain)
 		await domain.data.push.apply(domain.data,res.data);
 	}
-	
+  
+  //add divine monsters to list to add
+  if (!deck_master.attributes.includes("DIVINE")) { deck_master.attributes.push("DIVINE") }
+  
 	// add attributes and types to domain
 	for (const curattribute of deck_master.attributes){
 		var urlattribute = apiurl + "?attribute=" + curattribute;
