@@ -86,14 +86,22 @@ function UpdateCardsSheet()
 
   // Creating set of ids that already exist in the sheet.
   let idSet = new Set();
-  configData.forEach(line => (idSet.add(line[0]))); // Add the cards in the config sheet
+  configData.forEach(line => {
+    if(line != '')
+    {
+      idSet.add(line[0]) // Add the ids in the config sheet
+    }
+  }); 
 
   let cardEntries = []; // List of cards that will be in the sheet.
   cardsData.forEach(line => 
   {
     let entry = CardEntry.FromSheet(line);
-    idSet.add(entry.id); // Add the cards in the cards sheet.
-    cardEntries.push(entry); // The cards in the sheet should remain there.
+    if(entry['id'] != '') // Ignore lines without id (empty)
+    {
+      idSet.add(entry.id); // Add the cards in the cards sheet.
+      cardEntries.push(entry); // The cards in the sheet should remain there.
+    }
   });
 
   // Adding non-duplicate cards from YGOPRO's response to Cards Entries
@@ -145,6 +153,7 @@ function UpdateLayout()
   cardsRange.setBackgrounds(backgrounds);
 }
 
+// Generates a JSON containing the Domain Description of the cards and saves it to your drive
 function GenerateDomainDescJSON()
 {
   // Getting the cards sheet data
