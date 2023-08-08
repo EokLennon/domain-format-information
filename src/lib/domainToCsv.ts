@@ -53,10 +53,19 @@ const chkcards = async function (cards,domain,deck_master) {
 				if (!pushed) {
 					// check for archs
 					for (const arch of deck_master.archetypes) {
-						if ((curcard.desc.includes('"'+arch+'"') || curcard.name.includes(arch)) && curcard.desc.match('not treated as an? "'+arch+'"') == null) {
-							console.log("cardname: "+curcard.name)
-							toadd.data.push(curcard);
-							break;
+						try {
+							var curtext = curcard.desc.match('\(This card is( also)? always treated as an? ".*\)')[0]
+							if ((curtext.includes('"'+arch+'"') || curcard.name.includes(arch)) && curcard.desc.match('not treated as an? "'+arch+'"') == null) {
+								console.log("cardname: "+curcard.name)
+								toadd.data.push(curcard);
+								break;
+							}
+						} catch {
+							if (curcard.name.includes(arch) && curcard.desc.match('not treated as an? "'+arch+'"') == null) {
+								console.log("cardname: "+curcard.name)
+								toadd.data.push(curcard);
+								break;
+							}
 						}
 					}
 				}
