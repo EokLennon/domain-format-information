@@ -33,39 +33,31 @@ const chkcards = async function (cards,domain,deck_master) {
 		"data":[]
 	}
 	//check monsters for the domain
-	var temp;
-	var curcard_archs;
+	var pushed = false
 	for (var curcard of cards.data){
-		temp = "";
-		curcard_archs = [];
 		// check if card is already listed
 		if (!domain.data.includes(curcard)) {
 			// check if card is directly named
 			if (deck_master.cards.includes(curcard.name)){
 				toadd.data.push(curcard);
-			} else if (deck_master.stats != []) {
-				for (const stat of deck_master.stats) {
-					if (curcard.atk.toString() == stat.match("[0-9]{1,4} ATK")[0].match("[0-9]{1,4}")[0] && curcard.def.toString() == stat.match("[0-9]{1,4} DEF")[0].match("[0-9]{1,4}")[0]) {
-						toadd.data.push(curcard);
+			} else {
+				// check for stats
+				if (deck_master.stats != []) {
+					for (const stat of deck_master.stats) {
+						if (curcard.atk.toString() == stat.match("[0-9]{1,4} ATK")[0].match("[0-9]{1,4}")[0] && curcard.def.toString() == stat.match("[0-9]{1,4} DEF")[0].match("[0-9]{1,4}")[0]) {
+							toadd.data.push(curcard);
+							pushed = true;
+						}
 					}
 				}
-			} else {
-				// check for "always treated as archetype" and list archetype if so
-				temp = curcard.desc.match('\(This card is( also)? always treated as an? ".*" card\.\)');
-				if (temp != null) {
-					temp = temp[0].match('".*"')[0];
-					curcard_archs.push(temp.replaceAll('"',''));
-				}
-				// check for "always treated as name" and replace name if so
-				name_replacement = curcard.desc.match('\(This card(\'s name)? is( also)? always treated as ".*"\.\)');
-				if (name_replacement != null) {
-				  curcard.name = name_replacement[0].match('".*"')[0];
-				  curcard.name = curcard.name.replaceAll('"','');
-				}
-				// check for any archetype in the name
-				for (const arch of deck_master.archetypes) {
-					if (curcard_archs.includes(arch) || curcard.name.includes(arch)) {
-						toadd.data.push(curcard);
+				if (!pushed) {
+					// check for archs
+					for (const arch of deck_master.archetypes) {
+						if ((curcard.desc.includes('"'+arch+'"') || curcard.name.includes(arch)) && curcard.desc.match('not treated as an? "'+arch+'"') == null) {
+							console.log("cardname: "+curcard.name)
+							toadd.data.push(curcard);
+							break;
+						}
 					}
 				}
 			}
