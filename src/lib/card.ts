@@ -3,7 +3,7 @@ import { validArchetypes } from './constants';
 
 // #region Regex Replacers
 const cleanNotTreatedAsClause = (str: string) => {
-  const regex = /\(This card is not treated as a ".*" card.\)/i;
+  const regex = /\(This card is not treated as an? ".*" card.\)/i;
   const clauses: string[] = [];
   const cleanedStr = str.replace(regex, (match) => {
     clauses.push(match);
